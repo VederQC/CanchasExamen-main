@@ -7,11 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuarios")
+@EntityListeners(AuditingEntityListener.class)   // 🔥 NECESARIO PARA createdAt y updatedAt
 @Data
 @Builder
 @NoArgsConstructor
@@ -42,7 +44,6 @@ public class Usuario {
     @Builder.Default
     private EstadoUsuario estado = EstadoUsuario.ACTIVO;
 
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -56,6 +57,4 @@ public class Usuario {
         INACTIVO,
         SUSPENDIDO
     }
-
-
 }

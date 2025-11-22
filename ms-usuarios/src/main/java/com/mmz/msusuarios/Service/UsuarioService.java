@@ -37,6 +37,8 @@ public class UsuarioService {
                 .build();
 
         Usuario savedUsuario = usuarioRepository.save(usuario);
+
+
         return mapToResponseDTO(savedUsuario);
     }
 
