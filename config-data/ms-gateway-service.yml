@@ -7,11 +7,36 @@ spring:
 
   cloud:
     gateway:
+
+      # ==========================
+      # 🔥 GLOBAL CORS CONFIG
+      # ==========================
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+      # ==========================
+      # 🔍 Service Discovery
+      # ==========================
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
 
+      # ==========================
+      # 🚏 Routes
+      # ==========================
       routes:
         - id: ms-cancha
           uri: lb://ms-cancha
@@ -41,6 +66,7 @@ spring:
           filters:
             - name: AuthFilter
 
+        # 🔓 Auth sin filtro
         - id: ms-auth-service
           uri: lb://ms-auth-service
           predicates:
@@ -51,5 +77,6 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URI:http://localhost:8000/eureka}
+
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

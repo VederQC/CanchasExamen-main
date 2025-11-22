@@ -1,0 +1,74 @@
+/* ================= FONDO ================= */
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #00327d, #005ac2);
+  font-family: 'Roboto', sans-serif;
+}
+
+/* ================= CARD (IGUAL QUE REGISTER) ================= */
+.form-card {
+  width: 420px;
+  padding: 45px 40px;
+  background: #f7fbff;
+  border-radius: 25px;
+  box-shadow: 0px 10px 30px rgba(0,0,0,0.18);
+  text-align: center;
+}
+
+/* ================= TITULO ================= */
+.form-card h2 {
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #0a2c6b;
+}
+
+/* ================= INPUTS ================= */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+mat-label {
+  font-weight: 500;
+  color: #0a2c6b;
+}
+
+/* ================= BOTÓN ================= */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: white;
+  border: 2px solid #c0d8ff;
+  color: #004b9a;
+  transition: 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #e8f1ff;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.20);
+}
+
+/* ================= FOOTER LINKS ================= */
+.bottom-text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #0a2c6b;
+}
+
+.bottom-text a {
+  color: #004bff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.bottom-text a:hover {
+  text-decoration: underline;
+}

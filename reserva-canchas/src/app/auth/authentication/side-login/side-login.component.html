@@ -1,0 +1,28 @@
+<div class="form-card">
+
+  <h2>Iniciar sesión</h2>
+
+  <form [formGroup]="form">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre de usuario*</mat-label>
+      <input matInput formControlName="userName">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Contraseña*</mat-label>
+      <input matInput type="password" formControlName="password">
+    </mat-form-field>
+
+    <button class="submit-btn" (click)="login()">
+      Entrar
+    </button>
+
+  </form>
+
+  <p class="bottom-text">
+    ¿No tienes cuenta?
+    <a routerLink="/auth/register">Regístrate</a>
+  </p>
+
+</div>
