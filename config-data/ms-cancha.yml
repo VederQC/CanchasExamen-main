@@ -5,7 +5,7 @@ spring:
     name: ms-cancha
 
   datasource:
-    url: jdbc:mysql://localhost:3309/ms_cancha
+    url: jdbc:mysql://localhost:3306/ms_cancha
     username: root
     password: 124578369scar@
     driver-class-name: com.mysql.cj.jdbc.Driver

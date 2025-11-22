@@ -9,7 +9,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/mariosoto28/CanchasExamen.git
+          uri: https://github.com/VederQC/CanchasExamen-main.git
           searchPaths:
             - config-data
           default-label: main

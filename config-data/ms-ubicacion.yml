@@ -5,7 +5,7 @@ spring:
     name: ms-ubicacion
 
   datasource:
-    url: jdbc:mysql://localhost:3309/ms_ubicacion
+    url: jdbc:mysql://localhost:3306/ms_ubicacion
     username: root
     password: 124578369scar@
     driver-class-name: com.mysql.cj.jdbc.Driver
