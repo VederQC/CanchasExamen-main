@@ -1,0 +1,54 @@
+<div class="register-container">
+
+  <mat-card class="register-card">
+
+    <h2 class="title">Crear una cuenta</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <!-- USERNAME -->
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Nombre de usuario</mat-label>
+        <input matInput formControlName="userName">
+
+        <mat-error *ngIf="f.userName?.errors?.['required']">
+          Este campo es obligatorio.
+        </mat-error>
+
+        <mat-error *ngIf="f.userName?.errors?.['minlength']">
+          Mínimo 3 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- PASSWORD -->
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="password">
+
+        <mat-error *ngIf="f.password?.errors?.['required']">
+          Este campo es obligatorio.
+        </mat-error>
+
+        <mat-error *ngIf="f.password?.errors?.['minlength']">
+          La contraseña debe tener mínimo 6 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- BOTÓN -->
+      <button mat-raised-button color="primary" class="btn" [disabled]="loading">
+        {{ loading ? 'Creando cuenta...' : 'Registrarse' }}
+      </button>
+
+    </form>
+
+    <!-- ERROR GLOBAL -->
+    <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <p class="link">
+      ¿Ya tienes cuenta?
+      <a routerLink="/auth/login">Inicia sesión</a>
+    </p>
+
+  </mat-card>
+
+</div>

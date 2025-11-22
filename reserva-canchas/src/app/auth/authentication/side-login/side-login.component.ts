@@ -12,6 +12,7 @@ import { TokenModels } from 'src/app/core/models/token-models';
   standalone: true,
   imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
   templateUrl: './side-login.component.html',
+  styleUrls: ['./side-login.component.css']
 })
 export class AppSideLoginComponent {
 
@@ -32,13 +33,9 @@ export class AppSideLoginComponent {
 
     this.authService.login(credentials).subscribe({
       next: (data: TokenModels) => {
-
-        // Guardar token
         this.authService.setToken(data.token ?? '');
 
-
-        // Redirigir al área privada
-        this.router.navigate(['/dashboard.component'], { replaceUrl: true });
+        this.router.navigate(['/dashboard'], { replaceUrl: true });
       },
 
       error: err => {
@@ -47,4 +44,5 @@ export class AppSideLoginComponent {
       }
     });
   }
+
 }

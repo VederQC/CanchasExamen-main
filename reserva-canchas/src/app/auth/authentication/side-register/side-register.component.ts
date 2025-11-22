@@ -1,16 +1,24 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
-import { AuthService } from 'src/app//services/auth/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-side-register',
   standalone: true,
-  imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './side-register.component.html',
+  styleUrls: ['./side-register.component.css']
 })
 export class AppSideRegisterComponent {
 
@@ -18,7 +26,7 @@ export class AppSideRegisterComponent {
   errorMessage = '';
 
   form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    userName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
 
@@ -38,7 +46,7 @@ export class AppSideRegisterComponent {
     this.loading = true;
 
     const payload = {
-      email: this.form.value.email ?? '',
+      userName: this.form.value.userName ?? '',
       password: this.form.value.password ?? '',
     };
 
@@ -46,7 +54,7 @@ export class AppSideRegisterComponent {
       next: () => {
         this.loading = false;
         alert('Cuenta creada. Ahora inicia sesión.');
-        this.router.navigate(['/authentication/login']);
+        this.router.navigate(['/auth/login']);
       },
       error: (err) => {
         console.error(err);

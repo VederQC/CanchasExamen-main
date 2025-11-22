@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   register(payload: any) {
-    return this.http.post('auth/register', payload);
+    return this.http.post('auth/create', payload);
   }
 
   setToken(token: string) {
