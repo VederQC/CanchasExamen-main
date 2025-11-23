@@ -1,0 +1,102 @@
+/* FONDO GENERAL */
+.usuarios-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  animation: fadeIn 0.4s ease;
+}
+
+/* CARD TRANSLÚCIDA */
+.card {
+  width: 85%;
+  max-width: 1200px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* TÍTULOS */
+.titulo {
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.subtitulo {
+  text-align: center;
+  font-weight: 500;
+  color: #2c2c2c;
+  margin-bottom: 20px;
+}
+
+/* FORMULARIO */
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+mat-form-field {
+  flex: 1;
+  min-width: 240px;
+}
+
+/* BOTONES DEL FORM */
+.botones-form {
+  width: 100%;
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* TABLA */
+.tabla {
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-top: 10px;
+  background: rgba(255,255,255,0.7);
+}
+
+/* ============================= */
+/*     ESTADOS DE USUARIO        */
+/* ============================= */
+.estado {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+/* ACTIVO */
+.estado.activo {
+  background: #d6ffe3;
+  color: #168c42;
+}
+
+/* INACTIVO */
+.estado.inactivo {
+  background: #ffe1e1;
+  color: #b02121;
+}
+
+/* SUSPENDIDO */
+.estado.suspendido {
+  background: #fff4c0;
+  color: #927000;
+}
+
+/* ANIMACIÓN */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
