@@ -21,5 +21,4 @@ export class HomeComponent {
   goToRegister() {
     this.router.navigate(['/auth/register']);
   }
-
 }
