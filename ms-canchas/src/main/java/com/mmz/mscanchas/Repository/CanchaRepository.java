@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface CanchaRepository extends JpaRepository<Cancha, Long> {
     
-    List<Cancha> findByPropietarioId(UUID propietarioId);
+    List<Cancha> findByPropietarioId(Long  propietarioId);
     
     List<Cancha> findByTipoDeporte(Cancha.TipoDeporte tipoDeporte);
     

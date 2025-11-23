@@ -40,7 +40,7 @@ public class CanchaController {
 
     @GetMapping("/propietario/{propietarioId}")
     public ResponseEntity<List<CanchaResponseDTO>> obtenerCanchasPorPropietario(
-            @PathVariable UUID propietarioId) {
+            @PathVariable Long propietarioId) {
         List<CanchaResponseDTO> response = canchaService.obtenerCanchasPorPropietario(propietarioId);
         return ResponseEntity.ok(response);
     }

@@ -1,0 +1,100 @@
+<div class="usuarios-wrapper">
+
+  <div class="card">
+
+    <h2 class="titulo">Gestión de Usuarios</h2>
+    <h4 class="subtitulo">{{ modoEdicion ? 'Editar Usuario' : 'Nuevo Usuario' }}</h4>
+
+    <!-- FORMULARIO -->
+    <form [formGroup]="form" class="formulario moderno">
+
+      <div class="fila">
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido">
+        </mat-form-field>
+      </div>
+
+      <div class="fila">
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Teléfono</mat-label>
+          <input matInput formControlName="telefono">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="campo campo-full">
+        <mat-label>Foto Perfil (URL)</mat-label>
+        <input matInput formControlName="fotoPerfil">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo campo-full">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option value="ACTIVO">Activo</mat-option>
+          <mat-option value="INACTIVO">Inactivo</mat-option>
+          <mat-option value="SUSPENDIDO">Suspendido</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="acciones-form">
+        <button mat-flat-button class="btn-verde" (click)="guardar()">
+          {{ modoEdicion ? 'Actualizar' : 'Crear' }}
+        </button>
+
+        <button mat-stroked-button color="warn" *ngIf="modoEdicion" (click)="nuevoUsuario()">
+          Cancelar
+        </button>
+      </div>
+
+    </form>
+
+    <!-- LISTA DE USUARIOS EN TARJETAS -->
+    <div class="lista-usuarios">
+
+      <div *ngFor="let u of usuarios" class="usuario-card">
+
+        <!-- HEADER -->
+        <div class="usuario-header">
+          <img class="avatar"
+               [src]="u.fotoPerfil || 'https://cdn-icons-png.flaticon.com/512/1144/1144760.png'">
+          <div>
+            <h3>{{ u.nombre }} {{ u.apellido }}</h3>
+            <p class="email">{{ u.email }}</p>
+          </div>
+        </div>
+
+        <!-- INFO -->
+        <div class="info">
+          <p><strong>Teléfono:</strong> {{ u.telefono || '—' }}</p>
+
+          <span class="estado"
+                [class.activo]="u.estado === 'ACTIVO'"
+                [class.inactivo]="u.estado === 'INACTIVO'"
+                [class.suspendido]="u.estado === 'SUSPENDIDO'">
+            {{ u.estado }}
+          </span>
+        </div>
+
+        <!-- ACCIONES -->
+        <div class="acciones">
+          <button mat-stroked-button color="primary" (click)="editarUsuario(u)">Editar</button>
+          <button mat-stroked-button color="warn" (click)="eliminarUsuario(u.id!)">Eliminar</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

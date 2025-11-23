@@ -53,7 +53,7 @@ public class CanchaService {
     }
 
     @Transactional(readOnly = true)
-    public List<CanchaResponseDTO> obtenerCanchasPorPropietario(UUID propietarioId) {
+    public List<CanchaResponseDTO> obtenerCanchasPorPropietario(Long propietarioId) {
         return canchaRepository.findByPropietarioId(propietarioId).stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());

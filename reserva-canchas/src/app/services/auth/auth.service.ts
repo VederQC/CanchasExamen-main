@@ -1,6 +1,7 @@
-import {TokenModels} from '@app/core/models/token-models';
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { TokenModels } from '@app/core/models/token-models';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,19 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!this.getToken();
+  }
+
+  // ⭐⭐ NUEVO: obtener el ID del usuario desde el JWT ⭐⭐
+  getUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      return decoded.id || decoded.userId || decoded.sub || null;
+    } catch (e) {
+      console.error("Error decoding token:", e);
+      return null;
+    }
   }
 }

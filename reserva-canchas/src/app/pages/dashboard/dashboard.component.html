@@ -1,6 +1,24 @@
-<div class="dashboard-container">
-  <h1>🏆 Bienvenido a la Plataforma de Reservas</h1>
-  <p>Ya puedes reservar tus canchas deportivas.</p>
+<div class="dashboard-wrapper">
 
+  <!-- BOTÓN MENÚ A LA IZQUIERDA -->
+  <div class="menu-button" (click)="toggleMenu()">
+    ☰
+  </div>
+
+  <!-- BOTÓN LOGOUT A LA DERECHA -->
   <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+
+  <!-- SUBMENÚ DESPLEGABLE -->
+  <div class="float-menu" [class.open]="menuOpen">
+    <div class="menu-item" (click)="goTo('usuarios/lista')">
+      <span>👤</span> Usuarios
+    </div>
+    <div class="menu-item" (click)="goTo('canchas/lista')">
+      <span>🏟️</span> Canchas
+    </div>
+  </div>
+
+  <!-- AQUÍ VA EL CONTENIDO QUE CAMBIA -->
+  <router-outlet></router-outlet>
+
 </div>
