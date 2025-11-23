@@ -1,0 +1,113 @@
+<div class="canchas-wrapper">
+
+  <div class="card">
+
+    <h2 class="titulo">Gestión de Canchas</h2>
+    <h4 class="subtitulo">{{ modoEdicion ? 'Editar Cancha' : 'Nueva Cancha' }}</h4>
+
+    <form [formGroup]="form" class="formulario-cancha">
+
+      <div class="fila">
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput rows="2" formControlName="descripcion"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="fila">
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Tipo de deporte</mat-label>
+          <mat-select formControlName="tipoDeporte">
+            <mat-option *ngFor="let t of tiposDeporte" [value]="t">
+              {{ t }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Tipo de superficie</mat-label>
+          <input matInput formControlName="tipoSuperficie">
+        </mat-form-field>
+      </div>
+
+      <div class="fila">
+        <div class="campo toggle-wrapper">
+          <label class="label-toggle">Techada</label>
+          <mat-slide-toggle formControlName="techada">Sí</mat-slide-toggle>
+        </div>
+
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Capacidad jugadores</mat-label>
+          <input matInput type="number" formControlName="capacidadJugadores">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="campo campo-full">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option *ngFor="let e of estadosCancha" [value]="e">
+            {{ e }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="acciones-form">
+        <button mat-flat-button class="btn-verde" (click)="guardar()">
+          {{ modoEdicion ? 'Actualizar' : 'Crear' }}
+        </button>
+
+        <button mat-stroked-button color="warn" *ngIf="modoEdicion" (click)="nuevoRegistro()">
+          Cancelar
+        </button>
+      </div>
+
+    </form>
+
+
+    <!-- LISTA DE CANCHAS -->
+    <div class="lista-canchas">
+
+      <div *ngFor="let c of canchas" class="cancha-card">
+
+        <div class="cancha-header">
+          <div class="deporte-chip">
+            {{ c.tipoDeporte }}
+          </div>
+
+          <span class="estado"
+                [class.disponible]="c.estado === 'DISPONIBLE'"
+                [class.mantenimiento]="c.estado === 'MANTENIMIENTO'"
+                [class.inactiva]="c.estado === 'INACTIVA'">
+            {{ c.estado }}
+          </span>
+        </div>
+
+        <div class="cancha-body">
+          <h3>{{ c.nombre }}</h3>
+          <p class="descripcion">{{ c.descripcion || 'Sin descripción' }}</p>
+
+          <p><strong>Superficie:</strong> {{ c.tipoSuperficie || 'No especificado' }}</p>
+          <p><strong>Techada:</strong> {{ c.techada ? 'Sí' : 'No' }}</p>
+          <p><strong>Capacidad:</strong> {{ c.capacidadJugadores || '—' }} jugadores</p>
+        </div>
+
+        <div class="cancha-footer">
+          <small class="propietario">Propietario: {{ c.propietarioId }}</small>
+
+          <div class="acciones">
+            <button mat-stroked-button color="primary" (click)="editarCancha(c)">Editar</button>
+            <button mat-stroked-button color="warn" (click)="eliminarCancha(c.id!)">Eliminar</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

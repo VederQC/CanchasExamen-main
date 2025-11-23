@@ -24,7 +24,7 @@ public class Cancha {
     private Long id;
 
     @Column(name = "propietario_id", nullable = false)
-    private UUID propietarioId;
+    private Long  propietarioId;
 
     @Column(nullable = false, length = 100)
     private String nombre;

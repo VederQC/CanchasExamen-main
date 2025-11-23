@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CanchaResponseDTO {
     private Long id;
-    private UUID propietarioId;
+    private Long  propietarioId;
     private String nombre;
     private String descripcion;
     private Cancha.TipoDeporte tipoDeporte;

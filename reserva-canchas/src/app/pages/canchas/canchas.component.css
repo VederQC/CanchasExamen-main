@@ -1,0 +1,202 @@
+/* FONDO GENERAL */
+.canchas-wrapper {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  animation: fadeIn 0.4s ease;
+}
+
+/* CARD CONTENEDORA */
+.card {
+  width: 85%;
+  max-width: 1200px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(14px);
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* TÍTULOS */
+.titulo {
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.subtitulo {
+  text-align: center;
+  font-weight: 500;
+  color: #2c2c2c;
+  margin-bottom: 20px;
+}
+
+/* FORMULARIO */
+.formulario-cancha {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  border: 1px solid #e3e3e3;
+  margin-bottom: 30px;
+}
+
+.fila {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+.campo {
+  flex: 1;
+}
+
+.campo-full {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+/* Toggle */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: #f5fff8;
+  border-radius: 12px;
+  border: 1px solid #c6eed4;
+}
+
+.label-toggle {
+  font-weight: 600;
+}
+
+/* Botones form */
+.acciones-form {
+  margin-top: 16px;
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+/* Botón verde principal */
+.btn-verde {
+  background: #1b8f4a !important;
+  color: white !important;
+  padding: 8px 22px !important;
+  border-radius: 12px !important;
+  text-transform: none !important;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  transition: 0.2s ease;
+}
+
+.btn-verde:hover {
+  background: #15763d !important;
+  transform: translateY(-2px);
+}
+
+/* LISTA DE CANCHAS */
+.lista-canchas {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+/* TARJETA CANCHA */
+.cancha-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 5px 16px rgba(0,0,0,0.10);
+  border-left: 6px solid #1b8f4a;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: 0.2s ease;
+}
+
+.cancha-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+}
+
+/* HEADER */
+.cancha-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deporte-chip {
+  padding: 4px 10px;
+  background: #e7fff0;
+  color: #1b8f4a;
+  font-weight: 600;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* ESTADOS */
+.estado {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.estado.disponible {
+  background: #d9ffe5;
+  color: #1e8c4a;
+}
+
+.estado.mantenimiento {
+  background: #fff4c2;
+  color: #8a6d00;
+}
+
+.estado.inactiva {
+  background: #ffe5e5;
+  color: #c23636;
+}
+
+/* CUERPO */
+.cancha-body h3 {
+  margin: 0;
+}
+
+.descripcion {
+  margin: 4px 0 8px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* FOOTER */
+.cancha-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.propietario {
+  font-size: 11px;
+  color: #777;
+}
+
+.acciones {
+  display: flex;
+  gap: 8px;
+}
+
+/* ANIMACIÓN */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
