@@ -49,4 +49,16 @@ export class AuthService {
       return null;
     }
   }
+  getUserIdFromToken(): number {
+    const token = this.getToken();
+    if (!token) return 0;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      return decoded.id || decoded.userId || 0;   // Ajusta según tu token
+    } catch (e) {
+      console.error('Error decoding token', e);
+      return 0;
+    }
+  }
 }

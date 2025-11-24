@@ -1,0 +1,47 @@
+<div class="reserva-container">
+
+  <h2>Reservar Cancha</h2>
+
+  <!-- Seleccionar cancha -->
+  <mat-form-field appearance="outline" class="campo">
+    <mat-label>Seleccionar cancha</mat-label>
+    <mat-select [(ngModel)]="form.canchaId">
+      <mat-option *ngFor="let c of canchas" [value]="c.id">
+        {{ c.nombre }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Fecha -->
+  <mat-form-field appearance="outline" class="campo">
+    <mat-label>Fecha</mat-label>
+    <input matInput type="date" [(ngModel)]="form.fechaReserva">
+  </mat-form-field>
+
+  <!-- Hora de inicio -->
+  <mat-form-field appearance="outline" class="campo">
+    <mat-label>Hora inicio</mat-label>
+    <input matInput type="time" [(ngModel)]="form.horaInicio">
+  </mat-form-field>
+
+  <!-- Hora fin -->
+  <mat-form-field appearance="outline" class="campo">
+    <mat-label>Hora fin</mat-label>
+    <input matInput type="time" [(ngModel)]="form.horaFin">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="reservar()">Reservar</button>
+
+</div>
+
+<!-- HISTORIAL -->
+<div class="historial">
+  <h3>Mis Reservas</h3>
+
+  <div class="card" *ngFor="let r of reservas">
+    <p><b>Cancha:</b> {{ r.canchaNombre }}</p>
+    <p><b>Fecha:</b> {{ r.fechaReserva }}</p>
+    <p><b>Hora:</b> {{ r.horaInicio }} - {{ r.horaFin }}</p>
+    <span class="estado" [ngClass]="r.estado.toLowerCase()">{{ r.estado }}</span>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 package com.mmz.msreservas.Service;
 
-
 import com.mmz.msreservas.Dtos.*;
 import com.mmz.msreservas.Entity.Reserva;
 import com.mmz.msreservas.Exceptions.ReservaConflictException;
@@ -13,11 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ReservaService {
@@ -26,10 +27,10 @@ public class ReservaService {
     private final UsuarioFeign usuarioFeignClient;
     private final CanchaFeign canchaFeignClient;
 
-
     @Transactional
     public ReservaResponseDTO crearReserva(ReservaRequestDTO request) {
 
+        // ✅ Validar usuario
         UsuarioDTO usuario = usuarioFeignClient.obtenerUsuarioPorId(request.getUsuarioId());
         if (usuario == null) {
             throw new ResourceNotFoundException("Usuario no encontrado con ID: " + request.getUsuarioId());
@@ -38,6 +39,7 @@ public class ReservaService {
             throw new IllegalStateException("El usuario no está activo para realizar reservas");
         }
 
+        // ✅ Validar cancha
         CanchaDTO cancha = canchaFeignClient.obtenerCanchaPorId(request.getCanchaId());
         if (cancha == null) {
             throw new ResourceNotFoundException("Cancha no encontrada con ID: " + request.getCanchaId());
@@ -46,6 +48,7 @@ public class ReservaService {
             throw new IllegalStateException("La cancha no está disponible para reservas");
         }
 
+        // ✅ Verificar conflictos de horario
         List<Reserva> conflictos = reservaRepository.findReservasConflictivas(
                 request.getCanchaId(),
                 request.getFechaReserva(),
@@ -56,11 +59,19 @@ public class ReservaService {
             throw new ReservaConflictException("Ya existe una reserva en ese horario para la cancha seleccionada");
         }
 
+        // ✅ Calcular duración en horas
         BigDecimal duracionHoras = calcularDuracionHoras(
                 request.getHoraInicio(),
                 request.getHoraFin()
         );
 
+        // ✅ Si no envías precioTotal desde el front, le ponemos 0.00 para que no explote
+        BigDecimal precioTotal = request.getPrecioTotal();
+        if (precioTotal == null) {
+            precioTotal = BigDecimal.ZERO;
+        }
+
+        // ✅ Construir entidad
         Reserva reserva = Reserva.builder()
                 .usuarioId(request.getUsuarioId())
                 .canchaId(request.getCanchaId())
@@ -68,7 +79,7 @@ public class ReservaService {
                 .horaInicio(request.getHoraInicio())
                 .horaFin(request.getHoraFin())
                 .duracionHoras(duracionHoras)
-                .precioTotal(request.getPrecioTotal())
+                .precioTotal(precioTotal)
                 .estado(Reserva.EstadoReserva.PENDIENTE)
                 .metodoPago(request.getMetodoPago())
                 .notas(request.getNotas())
@@ -77,7 +88,6 @@ public class ReservaService {
         Reserva saved = reservaRepository.save(reserva);
         return mapToResponseDTO(saved);
     }
-
 
     @Transactional
     public ReservaResponseDTO obtenerReservaPorId(Long id) {
@@ -134,7 +144,6 @@ public class ReservaService {
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
     }
-
 
     @Transactional
     public ReservaResponseDTO actualizarReserva(Long id, ReservaUpdateDTO updateDTO) {
@@ -195,7 +204,7 @@ public class ReservaService {
     private BigDecimal calcularDuracionHoras(LocalTime inicio, LocalTime fin) {
         long minutos = ChronoUnit.MINUTES.between(inicio, fin);
         return BigDecimal.valueOf(minutos)
-                .divide(BigDecimal.valueOf(60), 2, BigDecimal.ROUND_HALF_UP);
+                .divide(BigDecimal.valueOf(60), 2, RoundingMode.HALF_UP);
     }
 
     private ReservaResponseDTO mapToResponseDTO(Reserva reserva) {

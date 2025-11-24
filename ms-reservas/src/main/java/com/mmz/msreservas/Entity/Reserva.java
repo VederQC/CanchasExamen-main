@@ -15,7 +15,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "reservas", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"cancha_id", "fecha_reserva", "hora_inicio"})
+        @UniqueConstraint(columnNames = {"cancha_id", "fecha_reserva", "hora_inicio"})
 })
 @Data
 @Builder
@@ -45,7 +45,8 @@ public class Reserva {
     @Column(name = "duracion_horas", precision = 10, scale = 2)
     private BigDecimal duracionHoras;
 
-    @Column(name = "precio_total", nullable = false, precision = 10, scale = 2)
+    // 🔴 YA NO ES nullable = false, para que no reviente si viene null
+    @Column(name = "precio_total", precision = 10, scale = 2)
     private BigDecimal precioTotal;
 
     @Enumerated(EnumType.STRING)

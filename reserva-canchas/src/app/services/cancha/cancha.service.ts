@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cancha, CanchaRequest, CanchaUpdate, EstadoCancha, TipoDeporte } from 'src/app/models/cancha.model';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +11,11 @@ export class CanchaService {
   private readonly BASE_URL = 'canchas';
 
   constructor(private http: HttpClient) {}
+
+  // ⭐ NUEVO — Usado por reservas.component.ts
+  getAll(): Observable<Cancha[]> {
+    return this.http.get<Cancha[]>(`${this.BASE_URL}`);
+  }
 
   crearCancha(payload: CanchaRequest): Observable<Cancha> {
     return this.http.post<Cancha>(`${this.BASE_URL}`, payload);

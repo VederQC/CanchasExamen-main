@@ -10,12 +10,25 @@
 
   <!-- SUBMENÚ DESPLEGABLE -->
   <div class="float-menu" [class.open]="menuOpen">
+
     <div class="menu-item" (click)="goTo('usuarios/lista')">
       <span>👤</span> Usuarios
     </div>
+
     <div class="menu-item" (click)="goTo('canchas/lista')">
       <span>🏟️</span> Canchas
     </div>
+
+    <!-- ⭐ NUEVO – UBICACIONES -->
+    <div class="menu-item" (click)="goTo('ubicaciones/lista')">
+      <span>📍</span> Ubicaciones
+    </div>
+
+    <!-- ⭐ NUEVO – RESERVAS -->
+    <div class="menu-item" (click)="goTo('reservas/lista')">
+      <span>📝</span> Reservas
+    </div>
+
   </div>
 
   <!-- AQUÍ VA EL CONTENIDO QUE CAMBIA -->

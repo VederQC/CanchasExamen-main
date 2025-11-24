@@ -1,0 +1,77 @@
+<div class="container">
+
+  <h1 class="titulo">Gestión de Ubicaciones</h1>
+  <h3 class="subtitulo">{{ modoEdicion ? 'Editar Ubicación' : 'Nueva Ubicación' }}</h3>
+
+  <!-- FORMULARIO -->
+  <form [formGroup]="form" class="formulario">
+
+    <div class="fila">
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>ID Cancha</mat-label>
+        <input matInput formControlName="canchaId" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Ciudad</mat-label>
+        <input matInput formControlName="ciudad" />
+      </mat-form-field>
+    </div>
+
+    <div class="fila">
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Distrito</mat-label>
+        <input matInput formControlName="distrito" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Departamento</mat-label>
+        <input matInput formControlName="departamento" />
+      </mat-form-field>
+    </div>
+
+    <div class="fila">
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Latitud</mat-label>
+        <input matInput type="number" formControlName="latitud" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Longitud</mat-label>
+        <input matInput type="number" formControlName="longitud" />
+      </mat-form-field>
+    </div>
+
+    <div class="botonera">
+      <button mat-raised-button color="primary" (click)="guardar()">
+        {{ modoEdicion ? 'Actualizar' : 'Crear' }}
+      </button>
+
+      <button *ngIf="modoEdicion" mat-stroked-button color="warn" (click)="cancelarEdicion()">
+        Cancelar
+      </button>
+    </div>
+
+  </form>
+
+  <!-- LISTADO -->
+  <div class="lista">
+    <div class="card" *ngFor="let u of ubicaciones">
+
+      <h3>Cancha ID: {{ u.canchaId }}</h3>
+
+      <p><strong>Ciudad:</strong> {{ u.ciudad }}</p>
+      <p><strong>Distrito:</strong> {{ u.distrito }}</p>
+      <p><strong>Departamento:</strong> {{ u.departamento }}</p>
+      <p><strong>Latitud:</strong> {{ u.latitud }}</p>
+      <p><strong>Longitud:</strong> {{ u.longitud }}</p>
+
+      <div class="acciones">
+        <button mat-button color="primary" (click)="editar(u)">Editar</button>
+        <button mat-button color="warn" (click)="eliminar(u.id)">Eliminar</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
