@@ -1,11 +1,12 @@
 server:
   port: ${PORT:${SERVER_PORT:0}}
+
 spring:
   application:
     name: ms-reserva-cancha
+
   main:
     allow-bean-definition-overriding: true
-
 
   datasource:
     url: jdbc:mysql://localhost:3306/ms_reserva_cancha
@@ -24,33 +25,38 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /doc/swagger-ui.html
+
 eureka:
   client:
-    serviceUrl:
+    service-url:
       defaultZone: ${EUREKA_URI:http://localhost:8000/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
+# ============================================
+# 🔥 RESILIENCE4J — YA FUNCIONANDO
+# ============================================
 resilience4j:
   circuitbreaker:
     instances:
       canchaPorIdCB:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
         minimumNumberOfCalls: 5
         failureRateThreshold: 50
-        waitDurationInOpenState: 10s
+        waitDurationInOpenState: 5s
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
 
       usuarioPorIdCB:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
         minimumNumberOfCalls: 5
         failureRateThreshold: 50
-        waitDurationInOpenState: 10s
+        waitDurationInOpenState: 5s
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
 
@@ -58,8 +64,7 @@ resilience4j:
     instances:
       canchaPorIdCB:
         maxAttempts: 3
-        waitDuration: 2s
-
+        waitDuration: 1s
       usuarioPorIdCB:
         maxAttempts: 3
-        waitDuration: 2s
+        waitDuration: 1s
