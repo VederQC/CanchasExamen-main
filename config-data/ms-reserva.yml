@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: ms-reserva-cancha
+  main:
+    allow-bean-definition-overriding: true
+
 
   datasource:
     url: jdbc:mysql://localhost:3306/ms_reserva_cancha

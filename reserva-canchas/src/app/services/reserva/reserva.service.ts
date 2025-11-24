@@ -5,29 +5,29 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
 
-  // ✔ Ruta correcta hacia ms-reserva-cancha a través del gateway
-  private API = 'http://localhost:9000/reservas';
+  // ❌ YA NO SE USA URL COMPLETA
+  // ✔ SOLO RUTA RELATIVA (el interceptor pondrá http://localhost:9000)
+  private API = '/reservas';
 
   constructor(private http: HttpClient) {}
 
-  // ✔ Crear una reserva
+  // Crear reserva
   crearReserva(data: any): Observable<any> {
-    return this.http.post(`${this.API}`, data); // ← SIN /create
+    return this.http.post(`${this.API}`, data);
   }
 
-
-  // ✔ Listar reservas por usuario
+  // Listar por usuario
   listarPorUsuario(idUsuario: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.API}/usuario/${idUsuario}`);
   }
 
-  // ✔ Listar reservas por cancha
+  // Listar por cancha
   listarPorCancha(idCancha: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.API}/cancha/${idCancha}`);
   }
 
-  // ✔ Listar TODAS las reservas
+  // Listar todas
   getAll(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.API}`);
+    return this.http.get<any[]>(this.API);
   }
 }

@@ -36,15 +36,10 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/reservas/reservas.component')
             .then(m => m.AppReservasComponent)
-      }
+      },
+
     ]
   },
 
-  // 🔹 OPCIONAL: RESERVAS COMO PANTALLA INDEPENDIENTE
-  {
-    path: 'reservas',
-    loadComponent: () =>
-      import('./pages/reservas/reservas.component')
-        .then(m => m.AppReservasComponent)
-  },
+
 ];
