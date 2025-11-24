@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsuarioDTO {
+
     private Long id;
     private String email;
     private String nombre;

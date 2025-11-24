@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
@@ -30,7 +29,12 @@ public class ReservaService {
     @Transactional
     public ReservaResponseDTO crearReserva(ReservaRequestDTO request) {
 
-        // ✅ Validar usuario
+        // 1. Parsear fecha y horas (vienen como String desde Angular)
+        LocalDate fechaReserva = LocalDate.parse(request.getFechaReserva());     // "2025-12-25"
+        LocalTime horaInicio = LocalTime.parse(request.getHoraInicio());        // "14:00:00"
+        LocalTime horaFin = LocalTime.parse(request.getHoraFin());              // "17:00:00"
+
+        // 2. Validar usuario por Feign
         UsuarioDTO usuario = usuarioFeignClient.obtenerUsuarioPorId(request.getUsuarioId());
         if (usuario == null) {
             throw new ResourceNotFoundException("Usuario no encontrado con ID: " + request.getUsuarioId());
@@ -39,45 +43,41 @@ public class ReservaService {
             throw new IllegalStateException("El usuario no está activo para realizar reservas");
         }
 
-        // ✅ Validar cancha
-        CanchaDTO cancha = canchaFeignClient.obtenerCanchaPorId(request.getCanchaId());
+        // 3. Validar cancha por Feign
+        CanchaResponseDTO cancha = canchaFeignClient.obtenerCanchaPorId(request.getCanchaId());
         if (cancha == null) {
             throw new ResourceNotFoundException("Cancha no encontrada con ID: " + request.getCanchaId());
         }
-        if (cancha.getEstado() != CanchaDTO.EstadoCancha.DISPONIBLE) {
+        if (cancha.getEstado() != CanchaResponseDTO.EstadoCancha.DISPONIBLE) {
             throw new IllegalStateException("La cancha no está disponible para reservas");
         }
 
-        // ✅ Verificar conflictos de horario
+        // 4. Validar conflictos de horario
         List<Reserva> conflictos = reservaRepository.findReservasConflictivas(
                 request.getCanchaId(),
-                request.getFechaReserva(),
-                request.getHoraInicio(),
-                request.getHoraFin()
+                fechaReserva,
+                horaInicio,
+                horaFin
         );
         if (!conflictos.isEmpty()) {
             throw new ReservaConflictException("Ya existe una reserva en ese horario para la cancha seleccionada");
         }
 
-        // ✅ Calcular duración en horas
-        BigDecimal duracionHoras = calcularDuracionHoras(
-                request.getHoraInicio(),
-                request.getHoraFin()
-        );
+        // 5. Calcular duración
+        BigDecimal duracionHoras = calcularDuracionHoras(horaInicio, horaFin);
 
-        // ✅ Si no envías precioTotal desde el front, le ponemos 0.00 para que no explote
-        BigDecimal precioTotal = request.getPrecioTotal();
-        if (precioTotal == null) {
-            precioTotal = BigDecimal.ZERO;
-        }
+        // 6. Precio total (si no envías, poner 0.00 para no romper por NOT NULL)
+        BigDecimal precioTotal = request.getPrecioTotal() != null
+                ? request.getPrecioTotal()
+                : BigDecimal.ZERO;
 
-        // ✅ Construir entidad
+        // 7. Construir reserva
         Reserva reserva = Reserva.builder()
                 .usuarioId(request.getUsuarioId())
                 .canchaId(request.getCanchaId())
-                .fechaReserva(request.getFechaReserva())
-                .horaInicio(request.getHoraInicio())
-                .horaFin(request.getHoraFin())
+                .fechaReserva(fechaReserva)
+                .horaInicio(horaInicio)
+                .horaFin(horaFin)
                 .duracionHoras(duracionHoras)
                 .precioTotal(precioTotal)
                 .estado(Reserva.EstadoReserva.PENDIENTE)
@@ -204,7 +204,7 @@ public class ReservaService {
     private BigDecimal calcularDuracionHoras(LocalTime inicio, LocalTime fin) {
         long minutos = ChronoUnit.MINUTES.between(inicio, fin);
         return BigDecimal.valueOf(minutos)
-                .divide(BigDecimal.valueOf(60), 2, RoundingMode.HALF_UP);
+                .divide(BigDecimal.valueOf(60), 2, BigDecimal.ROUND_HALF_UP);
     }
 
     private ReservaResponseDTO mapToResponseDTO(Reserva reserva) {

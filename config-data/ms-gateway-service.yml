@@ -8,9 +8,6 @@ spring:
   cloud:
     gateway:
 
-      # ==========================
-      # 🔥 GLOBAL CORS CONFIG
-      # ==========================
       globalcors:
         corsConfigurations:
           '[/**]':
@@ -26,52 +23,66 @@ spring:
             allowedHeaders: "*"
             allowCredentials: true
 
-      # ==========================
-      # 🔍 Service Discovery
-      # ==========================
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
 
-      # ==========================
-      # 🚏 Routes
-      # ==========================
       routes:
+
+        # ======================
+        # CANCHA
+        # ======================
         - id: ms-cancha
           uri: lb://ms-cancha
           predicates:
             - Path=/canchas/**
           filters:
-            - name: AuthFilter
+            - StripPrefix=1
+            - AuthFilter
 
+        # ======================
+        # RESERVAS
+        # ======================
         - id: ms-reserva-cancha
           uri: lb://ms-reserva-cancha
           predicates:
             - Path=/reservas/**
           filters:
-            - name: AuthFilter
+            - StripPrefix=1
+            - AuthFilter
 
+        # ======================
+        # UBICACION
+        # ======================
         - id: ms-ubicacion
           uri: lb://ms-ubicacion
           predicates:
             - Path=/ubicaciones/**
           filters:
-            - name: AuthFilter
+            - StripPrefix=1
+            - AuthFilter
 
+        # ======================
+        # USUARIO
+        # ======================
         - id: ms-usuario
           uri: lb://ms-usuario
           predicates:
             - Path=/usuarios/**
           filters:
-            - name: AuthFilter
+            - StripPrefix=1
+            - AuthFilter
 
-        # 🔓 Auth sin filtro
+        # ======================
+        # AUTH (NO FILTRO)
+        # ======================
         - id: ms-auth-service
           uri: lb://ms-auth-service
           predicates:
             - Path=/auth/**
-          filters: []
+          filters:
+            - StripPrefix=1
 
 eureka:
   client:
